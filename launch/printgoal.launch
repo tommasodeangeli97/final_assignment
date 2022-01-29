@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+	<node pkg="final_assignment" name="goal" type="move_base_client.py" output="screen" launch-prefix="xterm -e" respawn="true"/>
+		
+</launch>

@@ -1,0 +1,4 @@
+#parameters to launch move_base
+
+goal_x: 0
+goal_y: 0

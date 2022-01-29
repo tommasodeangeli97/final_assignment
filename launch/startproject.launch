@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<launch>
+	<rosparam param="madalita" command="load" value="0"/>
+	
+	<include file="$(find final_assignment)/launch/instructions.launch"/>
+	
+	<include file="$(find final_assignment)/launch/simulation_gmapping.launch"/>
+	<include file="$(find final_assignment)/launch/move_base.launch" />
+	
+	<include file="$(find final_assignment)/launch/printgoal.launch"/>
+	
+	<include file="$(find final_assignment)/launch/modetwo.launch"/>
+	
+	<include file="$(find final_assignment)/launch/modethree.launch"/>
+</launch>
