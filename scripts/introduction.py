@@ -8,11 +8,6 @@ import roslaunch
 def change():  #change the parameter to switch between the trhee modalities
 	x=int(input("modality: "))
 	rospy.set_param('modalita', x)
-	command=sys.path("$(find) final_assignment/launch/start_project.launch")
-	uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
-	roslaunch.configure_logging(uuid)
-	tracking_launch = roslaunch.parent.ROSLaunchParent(uuid, [command])
-	tracking_launch.start()
 	
 	
 if __name__ == '__main__':  #gives the possibilities
