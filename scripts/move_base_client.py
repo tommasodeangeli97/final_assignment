@@ -1,15 +1,36 @@
 #! /usr/bin/env python
 
+"""
+.. module:: move_base_client
+   :platform: Unix
+   :synopsis: Python module to interact with the move_base client, send goal and take the results of the oparation
+   
+.. moduleauthor:: Tommaso De Angeli
+
+ROS node to interact with the move_base action, it's composed by two functions,
+one is to control the modality of the application and the other is to interact with the move_ base action
+
+Actions:
+  move_base to make the robot go to the indicated point
+"""
 from __future__ import print_function
 import rospy
-
-# Brings in the SimpleActionClient
 import actionlib
-
-# Brings in the messages used by the move_base action
 from move_base_msgs.msg import MoveBaseGoal, MoveBaseAction, MoveBaseResult
 
-def controll():  #Controlling the parameter to stop the nodes that are not wanted
+def controll():
+	"""
+	Function for controlling the parameter, if the parameter is setted on the required value the node will start, otherwise the function continously calls itself
+
+	Args:
+	  none
+  
+	Returns:
+	  none
+  
+	Function called:
+	  controll()
+	"""
 	ver_=rospy.get_param("modalita")
 	if ver_ != 1:
 		rospy.loginfo("this modality is temporary blocked, please put 'modality 1' in the instructions interface")
@@ -19,6 +40,30 @@ def controll():  #Controlling the parameter to stop the nodes that are not wante
 		return 
 		
 def movebase_client():
+    """
+    Function for developping the move_base client, it waits the user to insert the goal taken as coordinates x,y; it sends the goal to the action server and waits the result
+
+    Args:
+      none
+  
+    Returns:
+      client.get_result(), function already existing in actionlib
+  
+    Function called:
+      client.wait_for_server() to wait untill the connection with the server is stablished
+  
+    Function called:
+      client.send_goal() to send the aquired goal to the actionlib
+  
+    Function called:
+      client.wait_for_result() to wait untill the action is finished 
+  
+    Function called:
+      client.cancel_goal() to delet the actual goal 
+  
+    Function called:
+      client.get_result() to take the result of the action 
+    """
     
     # Creates the SimpleActionClient, passing the type of the action to the constructor.
     client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
@@ -64,6 +109,15 @@ def movebase_client():
         return client.get_result()
 
 if __name__ == '__main__':
+	"""
+	Main function for colling the control of the parameter and inizialising a rospy node in order to give the possibility to the SimpleActionClient to communicate over ROS
+
+	Function called:
+	  controll()
+  
+	Function called:
+	  movebase_client() called after the controll() function is done
+	"""
     try:
         # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS.
         rospy.init_node('move_base_client_py')
