@@ -30,7 +30,11 @@ def change():
 	"""
 	x=int(input("modality: "))
 	rospy.set_param('modalita', x)
+<<<<<<< HEAD
 		
+=======
+	
+>>>>>>> c528b5f4d5c6caf3d1cc6661060720b368848f5b
 	
 if __name__ == '__main__':  
 	"""
