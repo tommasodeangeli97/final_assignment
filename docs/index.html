@@ -40,7 +40,7 @@
 <li><a class="reference internal" href="#">Welcome to final_assignment’s documentation!</a></li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 <li><a class="reference internal" href="#module-scripts.introduction">Introduction Module</a></li>
-<li><a class="reference internal" href="#move-base-client-module">Move_base_client Module</a></li>
+<li><a class="reference internal" href="#module-scripts.move_base_client">Move_base_client Module</a></li>
 <li><a class="reference internal" href="#module-scripts.obstacles">Obstacles Module</a></li>
 </ul>
 </div>
@@ -84,21 +84,74 @@
 <div class="section" id="module-scripts.introduction">
 <span id="introduction-module"></span><h1>Introduction Module<a class="headerlink" href="#module-scripts.introduction" title="Permalink to this headline"></a></h1>
 <span class="target" id="module-introduction"></span><p>ROS node that set the parameter in the parameter server, continuosly running</p>
-<dl class="simple">
-<dt>The parameter is taken from the parameter server created here, in the launch file</dt><dd><p>:mod:’go_to_point’ /root/my_ros_ws/src/final_assignment/launch/startproject.launch</p>
+<p>The parameter is taken from the parameter server created in the <em>startproject.launch</em> file in the launch folder</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.introduction.change">
+<span class="sig-prename descclassname"><span class="pre">scripts.introduction.</span></span><span class="sig-name descname"><span class="pre">change</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/introduction.html#change"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.introduction.change" title="Permalink to this definition"></a></dt>
+<dd><p>Function for taking the value of the parameter from the user and setting it in the parameter server</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>none</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
 </dd>
 </dl>
-<dl class="field-list simple">
-<dt class="field-odd">members</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
+</dd></dl>
+
 </div>
-<div class="section" id="move-base-client-module">
-<h1>Move_base_client Module<a class="headerlink" href="#move-base-client-module" title="Permalink to this headline"></a></h1>
-<dl class="field-list simple">
-<dt class="field-odd">members</dt>
-<dd class="field-odd"><p></p></dd>
+<div class="section" id="module-scripts.move_base_client">
+<span id="move-base-client-module"></span><h1>Move_base_client Module<a class="headerlink" href="#module-scripts.move_base_client" title="Permalink to this headline"></a></h1>
+<span class="target" id="module-move_base_client"></span><p>ROS node to interact with the move_base action, it’s composed by two functions,
+one is to control the modality of the application and the other is to interact with the move_base action</p>
+<dl class="simple">
+<dt>Actions:</dt><dd><p>move_base to make the robot go to the indicated point</p>
+</dd>
 </dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.move_base_client.controll">
+<span class="sig-prename descclassname"><span class="pre">scripts.move_base_client.</span></span><span class="sig-name descname"><span class="pre">controll</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/move_base_client.html#controll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.move_base_client.controll" title="Permalink to this definition"></a></dt>
+<dd><p>Function for controlling the parameter, if the parameter is setted on the required value the node will start, otherwise the function continously calls itself</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>none</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Function called:</dt><dd><p>controll()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.move_base_client.movebase_client">
+<span class="sig-prename descclassname"><span class="pre">scripts.move_base_client.</span></span><span class="sig-name descname"><span class="pre">movebase_client</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/move_base_client.html#movebase_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.move_base_client.movebase_client" title="Permalink to this definition"></a></dt>
+<dd><p>Function for developping the move_base client, it waits the user to insert the goal taken as coordinates x,y; it sends the goal to the action server and waits the result</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>none</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>client.get_result(), function already existing in actionlib</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Function called:</dt><dd><p>client.wait_for_server() to wait untill the connection with the server is stablished</p>
+</dd>
+<dt>Function called:</dt><dd><p>client.send_goal() to send the aquired goal to the actionlib</p>
+</dd>
+<dt>Function called:</dt><dd><p>client.wait_for_result() to wait untill the action is finished</p>
+</dd>
+<dt>Function called:</dt><dd><p>client.cancel_goal() to delet the actual goal</p>
+</dd>
+<dt>Function called:</dt><dd><p>client.get_result() to take the result of the action</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="module-scripts.obstacles">
 <span id="obstacles-module"></span><h1>Obstacles Module<a class="headerlink" href="#module-scripts.obstacles" title="Permalink to this headline"></a></h1>
@@ -111,10 +164,107 @@
 <dt>Publishes to:</dt><dd><p>/cmd_vel to change the velocity of the robot</p>
 </dd>
 </dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.obstacles.VelocityCallback">
+<span class="sig-prename descclassname"><span class="pre">scripts.obstacles.</span></span><span class="sig-name descname"><span class="pre">VelocityCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/obstacles.html#VelocityCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.obstacles.VelocityCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Function callback for the velocity, gives the actual velocity value to globals variables angular and linear</p>
 <dl class="field-list simple">
-<dt class="field-odd">members</dt>
-<dd class="field-odd"><p></p></dd>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>Twist</em><em>) </em><em>given by the subscriber sub_vel in the watch</em><em>(</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.obstacles.ViewCallback">
+<span class="sig-prename descclassname"><span class="pre">scripts.obstacles.</span></span><span class="sig-name descname"><span class="pre">ViewCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/obstacles.html#ViewCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.obstacles.ViewCallback" title="Permalink to this definition"></a></dt>
+<dd><p>Function callback for the scanner, gives the minimum distance value to the global variable <em>regions_</em></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<em>LaserScan</em><em>) </em><em>given by the subrcriber sub_scan in the watch</em><em>(</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.obstacles.action">
+<span class="sig-prename descclassname"><span class="pre">scripts.obstacles.</span></span><span class="sig-name descname"><span class="pre">action</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/obstacles.html#action"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.obstacles.action" title="Permalink to this definition"></a></dt>
+<dd><p>Function for countinously confronting the information stored in the global variables and for publishing on the /cmd_vel in order to avoid the collision with the walls. The function takes all the
+global variables and defines vel=Twist() to publish on the topic</p>
+<dl class="simple">
+<dt>Publishes to:</dt><dd><p>/cmd_vel</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>none</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Function called:</dt><dd><p>watch()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.obstacles.angular">
+<span class="sig-prename descclassname"><span class="pre">scripts.obstacles.</span></span><span class="sig-name descname"><span class="pre">angular</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#scripts.obstacles.angular" title="Permalink to this definition"></a></dt>
+<dd><p>Global variables for the scanner, the linear velocity and the angular velocity</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.obstacles.controll">
+<span class="sig-prename descclassname"><span class="pre">scripts.obstacles.</span></span><span class="sig-name descname"><span class="pre">controll</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/obstacles.html#controll"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.obstacles.controll" title="Permalink to this definition"></a></dt>
+<dd><p>Function for controlling the parameter, if the parameter is setted on the required value the node will start, otherwise the function continously calls itself</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>none</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Function called:</dt><dd><p>controll()</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="scripts.obstacles.pub">
+<span class="sig-prename descclassname"><span class="pre">scripts.obstacles.</span></span><span class="sig-name descname"><span class="pre">pub</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;rospy.topics.Publisher</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#scripts.obstacles.pub" title="Permalink to this definition"></a></dt>
+<dd><p>Publisher that publishes on /cmd_vel when the robot is too close to a wall for avoiding the collision</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="scripts.obstacles.watch">
+<span class="sig-prename descclassname"><span class="pre">scripts.obstacles.</span></span><span class="sig-name descname"><span class="pre">watch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/obstacles.html#watch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.obstacles.watch" title="Permalink to this definition"></a></dt>
+<dd><p>Function for reading the information given by the two topics</p>
+<dl class="simple">
+<dt>Subscribes to:</dt><dd><p>/cmd_vel for knowing the actual velocity of the robot</p>
+</dd>
+<dt>Subcribes to:</dt><dd><p>/scan to read the information of distances given by the scanner on the robot</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>none</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>none</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

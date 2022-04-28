@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>scripts.move_base_client &mdash; final_assignment 1.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> final_assignment
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">final_assignment</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      <li>scripts.move_base_client</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for scripts.move_base_client</h1><div class="highlight"><pre>
+<span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">.. module:: move_base_client</span>
+<span class="sd">   :platform: Unix</span>
+<span class="sd">   :synopsis: Python module to interact with the move_base client, send goal and take the results of the oparation</span>
+<span class="sd">   </span>
+<span class="sd">.. moduleauthor:: Tommaso De Angeli</span>
+
+<span class="sd">ROS node to interact with the move_base action, it&#39;s composed by two functions,</span>
+<span class="sd">one is to control the modality of the application and the other is to interact with the move_base action</span>
+
+<span class="sd">Actions:</span>
+<span class="sd">  move_base to make the robot go to the indicated point</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">import</span> <span class="nn">actionlib</span>
+<span class="kn">from</span> <span class="nn">move_base_msgs.msg</span> <span class="kn">import</span> <span class="n">MoveBaseGoal</span><span class="p">,</span> <span class="n">MoveBaseAction</span><span class="p">,</span> <span class="n">MoveBaseResult</span>
+
+<div class="viewcode-block" id="controll"><a class="viewcode-back" href="../../index.html#scripts.move_base_client.controll">[docs]</a><span class="k">def</span> <span class="nf">controll</span><span class="p">():</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	Function for controlling the parameter, if the parameter is setted on the required value the node will start, otherwise the function continously calls itself</span>
+
+<span class="sd">	Args:</span>
+<span class="sd">	  none</span>
+<span class="sd">  </span>
+<span class="sd">	Returns:</span>
+<span class="sd">	  none</span>
+<span class="sd">  </span>
+<span class="sd">	Function called:</span>
+<span class="sd">	  controll()</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">ver_</span><span class="o">=</span><span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s2">&quot;modalita&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">ver_</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+		<span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;this modality is temporary blocked, please put &#39;modality 1&#39; in the instructions interface&quot;</span><span class="p">)</span>
+		<span class="n">controll</span><span class="p">()</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;thanks to have chosen that modality, let&#39;s go!&quot;</span><span class="p">)</span>
+		<span class="k">return</span> </div>
+		
+<div class="viewcode-block" id="movebase_client"><a class="viewcode-back" href="../../index.html#scripts.move_base_client.movebase_client">[docs]</a><span class="k">def</span> <span class="nf">movebase_client</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function for developping the move_base client, it waits the user to insert the goal taken as coordinates x,y; it sends the goal to the action server and waits the result</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      none</span>
+<span class="sd">  </span>
+<span class="sd">    Returns:</span>
+<span class="sd">      client.get_result(), function already existing in actionlib</span>
+<span class="sd">  </span>
+<span class="sd">    Function called:</span>
+<span class="sd">      client.wait_for_server() to wait untill the connection with the server is stablished</span>
+<span class="sd">  </span>
+<span class="sd">    Function called:</span>
+<span class="sd">      client.send_goal() to send the aquired goal to the actionlib</span>
+<span class="sd">  </span>
+<span class="sd">    Function called:</span>
+<span class="sd">      client.wait_for_result() to wait untill the action is finished </span>
+<span class="sd">  </span>
+<span class="sd">    Function called:</span>
+<span class="sd">      client.cancel_goal() to delet the actual goal </span>
+<span class="sd">  </span>
+<span class="sd">    Function called:</span>
+<span class="sd">      client.get_result() to take the result of the action </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Creates the SimpleActionClient, passing the type of the action to the constructor.</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">actionlib</span><span class="o">.</span><span class="n">SimpleActionClient</span><span class="p">(</span><span class="s1">&#39;move_base&#39;</span><span class="p">,</span> <span class="n">MoveBaseAction</span><span class="p">)</span>
+
+    <span class="c1"># Waits until the action server has started up</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">wait_for_server</span><span class="p">()</span>
+    
+    <span class="c1"># take the inputs</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;x dest: &quot;</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;y dest: &quot;</span><span class="p">))</span>
+
+    <span class="c1"># Creates a goal to send to the action server.</span>
+    <span class="n">goal</span> <span class="o">=</span> <span class="n">MoveBaseGoal</span><span class="p">()</span>
+    <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">frame_id</span><span class="o">=</span> <span class="s2">&quot;map&quot;</span>
+    <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">orientation</span><span class="o">.</span><span class="n">w</span><span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span><span class="o">=</span><span class="n">x</span>
+    <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span><span class="o">=</span><span class="n">y</span>
+    <span class="n">goal</span><span class="o">.</span><span class="n">target_pose</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">stamp</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+    <span class="c1"># Sends the goal to the action server.</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">send_goal</span><span class="p">(</span><span class="n">goal</span><span class="p">)</span>
+    
+    <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;I&#39;m moving!&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Waits for the server to finish performing the action.</span>
+    <span class="n">wait</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">wait_for_result</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">45.0</span><span class="p">))</span>
+
+    <span class="c1"># Gives the possibilities to the user and prints out the result of executing the action</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">wait</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;The position isn&#39;t reaced yet, do you want to change the destination?&quot;</span><span class="p">)</span>
+        <span class="n">req</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;insert &#39;yes&#39; or &#39;no&#39; : &quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">req</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">):</span>
+            <span class="n">client</span><span class="o">.</span><span class="n">cancel_goal</span><span class="p">()</span>
+            
+            <span class="n">movebase_client</span><span class="p">()</span> 
+        <span class="k">elif</span> <span class="p">(</span><span class="n">req</span> <span class="o">==</span> <span class="s1">&#39;no&#39;</span><span class="p">):</span>
+            <span class="n">wait</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">wait_for_result</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">rospy</span><span class="o">.</span><span class="n">Duration</span><span class="p">(</span><span class="mf">45.0</span><span class="p">))</span>
+            <span class="k">if</span><span class="p">(</span> <span class="n">wait</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;Unfortunatly the position can&#39;t be reached&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>   
+        <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main function for colling the control of the parameter and inizialising a rospy node in order to give the possibility to the SimpleActionClient to communicate over ROS</span>
+
+<span class="sd">    Function called:</span>
+<span class="sd">      controll()</span>
+<span class="sd">  </span>
+<span class="sd">    Function called:</span>
+<span class="sd">      movebase_client() called after the controll() function is done</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS.</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;move_base_client_py&#39;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        	<span class="n">controll</span><span class="p">()</span>
+        	<span class="n">result</span> <span class="o">=</span> <span class="n">movebase_client</span><span class="p">()</span>
+        	<span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+            		<span class="n">rospy</span><span class="o">.</span><span class="n">loginfo</span><span class="p">(</span><span class="s2">&quot;I&#39;m here! If you want going somewere else, insert the destination!&quot;</span><span class="p">)</span>
+            		<span class="n">controll</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;program interrupted before completion&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Tommaso De Angeli.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

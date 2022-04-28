@@ -22,14 +22,14 @@ Indices and tables
 Introduction Module
 =====================
 .. automodule:: scripts.introduction
-:members:
+   :members:
 
 Move_base_client Module
-=====================
+========================
 .. automodule:: scripts.move_base_client
-:members:
+   :members:
 
 Obstacles Module
 =====================
 .. automodule:: scripts.obstacles
-:members:
+   :members:

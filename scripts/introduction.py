@@ -9,8 +9,7 @@
 
 ROS node that set the parameter in the parameter server, continuosly running
 
-The parameter is taken from the parameter server created here, in the launch file 
-   :mod:'go_to_point' /root/my_ros_ws/src/final_assignment/launch/startproject.launch
+The parameter is taken from the parameter server created in the *startproject.launch* file in the launch folder
 """
 
 import sys
@@ -30,11 +29,7 @@ def change():
 	"""
 	x=int(input("modality: "))
 	rospy.set_param('modalita', x)
-<<<<<<< HEAD
-		
-=======
-	
->>>>>>> c528b5f4d5c6caf3d1cc6661060720b368848f5b
+
 	
 if __name__ == '__main__':  
 	"""

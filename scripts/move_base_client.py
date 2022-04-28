@@ -8,7 +8,7 @@
 .. moduleauthor:: Tommaso De Angeli
 
 ROS node to interact with the move_base action, it's composed by two functions,
-one is to control the modality of the application and the other is to interact with the move_ base action
+one is to control the modality of the application and the other is to interact with the move_base action
 
 Actions:
   move_base to make the robot go to the indicated point
@@ -109,15 +109,15 @@ def movebase_client():
         return client.get_result()
 
 if __name__ == '__main__':
-	"""
-	Main function for colling the control of the parameter and inizialising a rospy node in order to give the possibility to the SimpleActionClient to communicate over ROS
+    """
+    Main function for colling the control of the parameter and inizialising a rospy node in order to give the possibility to the SimpleActionClient to communicate over ROS
 
-	Function called:
-	  controll()
+    Function called:
+      controll()
   
-	Function called:
-	  movebase_client() called after the controll() function is done
-	"""
+    Function called:
+      movebase_client() called after the controll() function is done
+    """
     try:
         # Initializes a rospy node so that the SimpleActionClient can publish and subscribe over ROS.
         rospy.init_node('move_base_client_py')

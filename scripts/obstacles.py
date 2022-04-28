@@ -95,7 +95,7 @@ def watch():   #I subscribe from the nodes
 def ViewCallback(msg):  ##here I take the minimum distance between the robot and the wall
 
 	"""
-	Function callback for the scanner, gives the minimum distance value to the global variable regions_
+	Function callback for the scanner, gives the minimum distance value to the global variable *regions_*
 
 	Args:
 	  msg(LaserScan) given by the subrcriber sub_scan in the watch() function to control the robot distance
